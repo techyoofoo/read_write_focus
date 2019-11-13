@@ -6,7 +6,7 @@ read_write_focus
 
 # Payload data format
 
-```
+```json
 {
           UB: {
             header: {
