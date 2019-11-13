@@ -1,4 +1,5 @@
 import Hapi from "hapi";
+import {readFocus} from './src/common_functions'
 
 const init = async () => {
   await server.start();
@@ -24,6 +25,13 @@ server.route({
     return h.response("Welcome to Read write focus application").code(200)
   }
 });
+
+//Read focus
+server.route({
+  method:'POST',
+  path:'/test',
+  handler: readFocus
+})
 
 process.on("unhandledRejection", err => {
   console.log(err);

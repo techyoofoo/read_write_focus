@@ -8,18 +8,20 @@ read_write_focus
 
 ```json
 {
-          "UB": {
-            "header": {
-              "Version": "1",
-              "Message_ID": "projectname.company_name.plugin_name.api_name"
-            },
-            "data_body": "request.data",
-            "footer":{
-                "Copyright":"Yoofoo",
-                "Year": 2020
-            }
-          }
-        }
+  "UB": {
+    "header": {
+      "Version": "1",
+      "Message_ID": "projectname.company_name.plugin_name.api_name"
+    },
+    "data_body": "request.data",
+    "footer": {
+      "Copyright": "Yoofoo",
+      "Year": 2020
+    }
+  },
+  "permission_type": "read",
+  "map_url": "localhost:3000"
+}
 ```
 
 # Read focus
@@ -27,12 +29,14 @@ read_write_focus
 Post json data for read API call
 
 ```javascript
-readFocus(focus_type, payload, url, function(err) {
-  if (err) {
-    return console.error(err);
+readFocus = async (req, h) => {
+  try {
+    console.log("--payload--", req.payload);
+    return h.response(req.payload).code(200);
+  } catch (error) {
+    return h.response(error).code(500);
   }
-  console.log("done!");
-});
+};
 ```
 
 # Write Focus
@@ -40,10 +44,11 @@ readFocus(focus_type, payload, url, function(err) {
 Post json data for Write API call
 
 ```javascript
-writeFocus(focus_type, payload, url, function(err) {
-  if (err) {
-    return console.error(err);
+writeFocus = async (req, h) => {
+  try {
+    return h.response(req.payload).code(200);
+  } catch (error) {
+    return h.response(error).code(500);
   }
-  console.log("done!");
-});
+};
 ```
