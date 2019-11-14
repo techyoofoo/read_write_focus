@@ -8,7 +8,7 @@ const init = async () => {
 
 const server = Hapi.server({
   port: process.env.PORT || 7002,
-  host: process.env.IP || "0.0.0.0",
+  host: process.env.IP || "localhost",
   routes: {
     cors: {
       origin: ["*"],
@@ -17,6 +17,7 @@ const server = Hapi.server({
     }
   }
 });
+
 server.route({
   method: "GET",
   path: "/",
@@ -29,7 +30,7 @@ server.route({
 //Read focus
 server.route({
   method:'POST',
-  path:'/test',
+  path:'/readfocus',
   handler: readFocus
 })
 
