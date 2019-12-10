@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import uniqueString from 'unique-string';
 
 let request = {
   UB: {
@@ -19,30 +19,26 @@ let request = {
 
 // Read focus method
 //Can be made necessary changes based on requirments
-export const readFocus = async (req, h) => {
-  const promise = new Promise(async (resolve, reject) => {
-    try {
-      const config = {
-        headers: {
-          "content-type": "application/json"
-        }
-      };
-      
-      request.UB.data_body = req.payload
+export const readFocus = async (req, reply) => {
+  try {
+    const config = {
+      headers: {
+        "content-type": "application/json"
+      }
+    };
 
-      axios.post("http://localhost:7003/send_msg", request, config)
-        .then((response) => {
-          return resolve(response.data);
-        })
-        .catch(error => {
-          throw error
-        });
-    }
-    catch (error) {
-      throw error
-    }
-  });
-  return promise;
+    let queueName = uniqueString()
+    request.UB.data_body = { queue: queueName }
+
+    axios.post("http://localhost:7003/send_msg", request, config)
+      .catch(error => {
+        throw error
+      });
+    return reply.response(queueName);
+  }
+  catch (error) {
+    throw error
+  }
 };
 
 // Write focus method
