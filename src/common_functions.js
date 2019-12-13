@@ -54,10 +54,12 @@ export const writeFocus = async (req, reply) => {
         }
       };
       axios.post("http://localhost:3000/api/v1/genericlist", req.payload, config)
+        .then((response) => {
+          return resolve(reply.response(response.data));
+        })
         .catch(error => {
           throw error
         });
-      return resolve(reply.response("OK"));
     }
     catch (error) {
       throw error
