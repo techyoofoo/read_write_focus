@@ -22,19 +22,27 @@ let request = {
 export const readFocus = async (req, reply) => {
   const promise = new Promise(async (resolve, reject) => {
     try {
-      const config = {
-        headers: {
-          "content-type": "application/json"
-        }
-      };
-      let queueName = uniqueString()
-      request.UB.data_body = { queue: queueName }
-
-      axios.post("http://localhost:7003/send_msg", request, config)
+      axios.get(req.payload.url)
+        .then((response) => {
+          return resolve(reply.response(response.data));
+        })
         .catch(error => {
           throw error
         });
-      return resolve(reply.response(queueName));
+
+      // const config = {
+      //   headers: {
+      //     "content-type": "application/json"
+      //   }
+      // };
+      // let queueName = uniqueString()
+      // request.UB.data_body = { queue: queueName }
+
+      // axios.post("http://localhost:7003/send_msg", request, config)
+      //   .catch(error => {
+      //     throw error
+      //   });
+      // return resolve(reply.response(queueName));
     }
     catch (error) {
       throw error
@@ -53,7 +61,7 @@ export const writeFocus = async (req, reply) => {
           "content-type": "application/json"
         }
       };
-      axios.post("http://localhost:3000/api/v1/genericlist", req.payload, config)
+      axios.post("http://localhost:3001/api/v1/genericlist", req.payload, config)
         .then((response) => {
           return resolve(reply.response(response.data));
         })
